@@ -5,7 +5,7 @@ build: clean
 	docker tag edge-reverse-tunnel-tmp commnerd/edge-reverse-tunnel:$$(docker image inspect --format '{{ index .Config.Labels "image.version" }}' edge-reverse-tunnel-tmp:latest)
 	docker rmi edge-reverse-tunnel-tmp:latest
 
-push:
+push: build
 	for IMAGE in $$(docker images --filter=reference='commnerd/edge-reverse-tunnel:*' --format='{{.Tag}}'); do \
 		docker push "commnerd/edge-reverse-tunnel:$$IMAGE"; \
 	done

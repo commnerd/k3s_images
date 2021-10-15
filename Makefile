@@ -1,5 +1,7 @@
+TOPTARGETS := all push clean
 SUBDIRS := $(wildcard */.)
-.PHONY all push $(SUBDIRS)
+.PHONY: $(TOPTARGETS) $(SUBDIRS)
 
-all: $(SUBDIRS)
-  $(MAKE) -C $@
+$(TOPTARGETS): $(SUBDIRS)
+$(SUBDIRS):
+	$(MAKE) -C $@ $(MAKECMDGOALS)
