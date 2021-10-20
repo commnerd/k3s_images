@@ -1,7 +1,7 @@
 FROM alpine:3.13.6
 
 LABEL image.author="commnerd@gmail.com"
-LABEL image.version="1.0.3"
+LABEL image.version="1.0.4"
 
 ENV AUTH_KEY_FILE=id_rsa
 ENV BIND_PORT=80

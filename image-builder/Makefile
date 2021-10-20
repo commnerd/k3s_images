@@ -1,7 +1,7 @@
 .PHONY: build push clean
 
 build: clean
-	docker build -t image-builder-tmp:latest .
+	docker build --network host -t image-builder-tmp:latest .
 	docker tag image-builder-tmp commnerd/image-builder:$$(docker image inspect --format '{{ index .Config.Labels "image.version" }}' image-builder-tmp:latest)
 	docker rmi image-builder-tmp:latest
 
