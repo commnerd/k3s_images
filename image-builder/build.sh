@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-AUTH_KEY_FILE=$1
-BRANCH=$2
-
 # Copy and assign ownership to root for container run
 cp -fR /tmp/.ssh /root/.ssh
 

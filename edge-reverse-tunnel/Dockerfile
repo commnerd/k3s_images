@@ -16,4 +16,4 @@ COPY connect.sh /
 
 VOLUME /tmp/.ssh
 
-ENTRYPOINT [ "bash", "-c", "/connect.sh ${AUTH_KEY_FILE} ${BIND_PORT} ${DEST} ${DEST_PORT} ${USER} ${SERVER}" ]
+ENTRYPOINT [ "/connect.sh" ]
