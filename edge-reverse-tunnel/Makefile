@@ -1,7 +1,7 @@
 .PHONY: build push clean
 
 build: clean
-	docker build -t edge-reverse-tunnel-tmp:latest .
+	docker build --network host -t edge-reverse-tunnel-tmp:latest .
 	docker tag edge-reverse-tunnel-tmp commnerd/edge-reverse-tunnel:$$(docker image inspect --format '{{ index .Config.Labels "image.version" }}' edge-reverse-tunnel-tmp:latest)
 	docker rmi edge-reverse-tunnel-tmp:latest
 
