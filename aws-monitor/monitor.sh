@@ -16,10 +16,18 @@ chown -fR root:root /root/.aws
 
 while [ 1 ]; do
     if [ ! "$(curl https://michaeljmiller.net/alive)" ]; then
-        aws ec2 reboot-instances --instance-ids=i-062212f5e9bd22a63
-        sleep 300
-        # while [ "stopped" != "$(aws ec2 describe-instances --instance-ids=i-062212f5e9bd22a63 --output text --query 'Reservations[].Instances[].State.Name')" ]; do
-        #     sleep 10;
-        # done;
+        echo "Site down...  Attempting to restart server."
+        aws ec2 stop-instances --instance-ids=i-062212f5e9bd22a63
+        while [ "stopped" != "$(aws ec2 describe-instances --instance-ids=i-062212f5e9bd22a63 --output text --query 'Reservations[].Instances[].State.Name')" ]; do
+            echo "Waiting for server to stop."
+            sleep 10;
+        done;
+        aws ec2 start-instances --instance-ids=i-062212f5e9bd22a63
+        while [ "running" != "$(aws ec2 describe-instances --instance-ids=i-062212f5e9bd22a63 --output text --query 'Reservations[].Instances[].State.Name')" ]; do
+            echo "Waiting for server to start."
+            sleep 10;
+        done;
     fi;
+    echo "Sleeping for a half hour.  Last checked: "$(date)
+    sleep 1800;
 done;
