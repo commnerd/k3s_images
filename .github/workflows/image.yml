@@ -17,10 +17,11 @@ jobs:
           version: latest
       - name: build the images
         run: |
+          BASE_DIR=${PWD};
           for dir in $(ls -d */)
           do
             dir=${dir::-1};
-            cd $dir;
+            cd ${BASE_DIR}/$dir;
             docker buildx build \
               --tag commnerd/$dir:latest \
               --platform linux/amd64,linux/arm/v7,linux/arm64 .
