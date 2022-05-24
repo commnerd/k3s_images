@@ -1,0 +1,26 @@
+name: build our images
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: install buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      - name: build the images
+      run: |
+        for dir in $(ls -d */)
+        do
+          cd $dir;
+          docker buildx build \
+            --tag commnerd/$dir:latest \
+            --platform linux/amd64,linux/arm/v7,linux/arm64 .
+        done
