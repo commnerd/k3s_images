@@ -23,11 +23,11 @@ jobs:
             dir=${dir::-1};
             cd ${BASE_DIR}/$dir;
             docker buildx build \
-              --tag commnerd/$dir:latest \
+              --tag commnerd/${dir}:latest \
               --platform linux/amd64,linux/arm/v7,linux/arm64 .
           done
       - name: login to docker hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: build and push images
         run: |
           BASE_DIR=${PWD};
@@ -36,6 +36,6 @@ jobs:
             dir=${dir::-1};
             cd ${BASE_DIR}/$dir;
             docker buildx build --push \
-              --tag your-username/multiarch-example:latest \
+              --tag commnerd/${dir}:latest \
               --platform linux/amd64,linux/arm/v7,linux/arm64 .
           done
