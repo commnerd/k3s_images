@@ -19,6 +19,7 @@ jobs:
         run: |
           for dir in $(ls -d */)
           do
+            dir=${dir::-1};
             cd $dir;
             docker buildx build \
               --tag commnerd/$dir:latest \
