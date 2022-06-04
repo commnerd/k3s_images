@@ -11,4 +11,4 @@ RUN rm -fR /opt/* && \
 
 WORKDIR /opt/maikr/ui
 
-ENTRYPOINT ng serve
+ENTRYPOINT ng serve --disable-host-check
