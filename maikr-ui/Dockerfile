@@ -1,14 +1,13 @@
-FROM node
+FROM node as builder
 
 RUN rm -fR /opt/* && \
     apt update && \npm install -g npm@latest && \
     npm install -g @angular/cli && \
-    git clone https://github.com/commnerd/maikr.git /opt/maikr && \
-    rm -fR /opt/maikr/.git && \
-    rm -fR /opt/maikr/srv && \
-    cd /opt/maikr/ui && \
-    npm install
+    git clone https://github.com/commnerd/maikr.git /tmp/maikr && \
+    cd /tmp/maikr/ui && \
+    npm install && \
+    ng build
 
-WORKDIR /opt/maikr/ui
+FROM nginx:1.22.0
 
-ENTRYPOINT ng serve --host 0.0.0.0 --port 4200
+COPY --from=builder /tmp/maikr/ui/dist/maikr/* /usr/share/nginx/html
