@@ -11,4 +11,4 @@ RUN rm -fR /opt/* && \
 
 WORKDIR /opt/maikr/ui
 
-ENTRYPOINT ng serve --disable-host-check
+ENTRYPOINT ng serve --host 0.0.0.0 --port 4200
