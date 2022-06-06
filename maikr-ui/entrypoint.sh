@@ -7,4 +7,4 @@ do
 	sed -Ei "s/path-to-api/${API_PATH}/g" /usr/share/nginx/html/${f};
 done
 
-exec "/docker-entrypoint.sh $@" #Original nginx image entrypoint
+exec "$@"
