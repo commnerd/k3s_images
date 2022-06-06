@@ -12,7 +12,4 @@ FROM nginx:1.22.0
 
 COPY --from=builder /tmp/maikr/ui/dist/maikr/* /usr/share/nginx/html
 
-ADD entrypoint.sh /
-
-ENTRYPOINT ["/entrypoint.sh"]
-
+ADD api_updater.sh /docker-entrypoint.d

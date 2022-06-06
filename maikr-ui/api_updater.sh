@@ -6,5 +6,3 @@ for f in $(ls /usr/share/nginx/html)
 do
 	sed -Ei "s/path-to-api/${API_PATH}/g" /usr/share/nginx/html/${f};
 done
-
-exec "$@"
