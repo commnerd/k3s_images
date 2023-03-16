@@ -1,0 +1,33 @@
+name: build our images
+
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: install buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          buildx-version: latest
+      - name: login to docker hub
+        run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login --username '${{ secrets.DOCKER_USERNAME }}' --password-stdin
+      - name: build and push images
+        run: |
+          BASE_DIR=${PWD};
+          for dir in $(ls -d */)
+          do
+            dir=${dir::-1};
+            cd ${BASE_DIR}/$dir;
+            docker buildx build --push \
+              --tag commnerd/${dir}:latest \
+              --platform linux/amd64,linux/arm/v7,linux/arm64 .
+          done
